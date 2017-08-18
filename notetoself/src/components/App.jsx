@@ -5,7 +5,6 @@ import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
 
 const cookie_key = 'NOTES';
 
-
 class App extends Component {
   constructor() {
     super();
@@ -30,6 +29,11 @@ class App extends Component {
     bake_cookie(cookie_key, this.state.notes);
   }
 
+  clear() {
+    delete_cookie(cookie_key);
+    this.setState({ notes: [] });
+  }
+
   // NOTE react shortcut: <Form inline={true}> === <Form inline>
   render() {
     return (
@@ -40,7 +44,7 @@ class App extends Component {
             <div className="input-group">
               <input className="form-control" type="text" placeholder="Search for..." onChange={event => this.setState({text: event.target.value})}/>
               <span className="input-group-btn">
-                <button className="btn btn-default" type="button" onClick={() => { this.submit()}}>Submit!</button>
+                <button className="btn btn-default" type="button" onClick={() => { this.submit()}}>Submit</button>
               </span>
             </div>
           </Form>
@@ -54,6 +58,13 @@ class App extends Component {
               })
             }
           </ul>
+          <button
+            className="btn btn-danger btn-block"
+            type="button"
+            onClick={() => { this.clear() }}
+            disabled={this.state.notes.length < 1}>
+            Clear
+          </button>
         </div>
       </div>
     )
