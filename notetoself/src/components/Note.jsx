@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Note extends Component {
+class Note extends Component {
   render() {
     return (
       <li className="list-group-item">
@@ -9,3 +9,5 @@ export default class Note extends Component {
     )
   }
 }
+
+export default Note;
