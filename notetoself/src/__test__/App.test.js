@@ -41,7 +41,7 @@ describe('App', () => {
       expect(app.state().text).toEqual(testNote);
     });
 
-    describe('and submitting the new new note', () => {
+    describe('and submitting the new note', () => {
       beforeEach(() => {
         app.find('.btn').at(0).simulate('click');
       });
@@ -50,8 +50,23 @@ describe('App', () => {
         expect(app.state().notes[0].text).toEqual(testNote);
       });
 
-      describe('and clicking the clear button', () => {
+      afterEach(() => {
+        app.find('.btn').at(1).simulate('click');
+      });
 
+      describe('remounts the compontent', () => {
+        let appTwo;
+
+        beforeEach(() => {
+          appTwo = mount(<App />);
+        });
+
+        it('reads the stored cookies', () => {
+          expect(appTwo.state().notes).toEqual([{ text: testNote }])
+        });
+      });
+
+      describe('and clicking the clear button', () => {
         beforeEach(() => {
           app.find('.btn').at(1).simulate('click');
         });
@@ -59,7 +74,6 @@ describe('App', () => {
         it('clears the state', () => {
           expect(app.state().notes).toEqual([]);
         })
-
       });
     });
   });
